@@ -30,12 +30,12 @@ static int pty_flags = VTE_PTY_DEFAULT;
 
 http://developer.gnome.org/pango/stable/pango-Fonts.html#pango-font-description-from-string
  */
-static const char font[] = "ProggySmallTT 12";
+static const char font[] = "ProggyCleanTT 12";
 
 static const char bgimage[] = {0};
-static const char bgcolor[] = "#000";
+static const char bgcolor[] = "black";
 static const char fgcolor[] = "#3a3";
-static const char bgtintcolor[] = "#000";
+static const char bgtintcolor[] = "black";
 static const char cursorcolor[] = "#3a3";
 static const char word_chars[] = "-A-Za-z0-9_$.+!*(),;:@&=?/~#%";
 static const char emulation[] = "xterm";
@@ -47,8 +47,8 @@ bool	transparent = true,
 	dbuffer = true,
 	scrollbar = false,
 	icon_title = false,
-	highlight_selection = false,
 	use_geometry_hints = false,
+	bolding = false,
 	mouse_autohide = true;
 
 static int32_t	savelines = 16383;

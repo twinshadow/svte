@@ -13,4 +13,13 @@ options:
 
 ${OBJ}: config.h config.mk
 
+config.h:
+	@echo creating $@ from config.def.h
+	@cp config.def.h $@
+
 svte: ${OBJ}
+
+install: all
+	@echo installing executable file to ${prefix}/bin
+	@install -d ${prefix}/bin
+	@install -m 755 svte ${prefix}/bin/svte

@@ -1,4 +1,5 @@
 VERSION = 0.1
+prefix = ${HOME}
 
 VTE_INC = `pkg-config --cflags vte-2.90 2> /dev/null`
 VTE_LIBS = `pkg-config --libs vte-2.90 2> /dev/null`

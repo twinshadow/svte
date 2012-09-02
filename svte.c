@@ -482,6 +482,7 @@ int terminal_setup(void)
 	vte_terminal_set_scrollback_lines(terminal, savelines);
 	vte_terminal_set_visible_bell(terminal, !audible);
 	vte_terminal_set_word_chars(terminal, word_chars);
+	vte_terminal_set_allow_bold(terminal, bolding);
 	if (*bgimage != '\0')
 		vte_terminal_set_background_image_file(terminal, bgimage);
 
