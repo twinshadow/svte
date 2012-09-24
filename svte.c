@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <gtk/gtk.h>
 #include <glib-object.h>
+#include <getopt.h>
 
 #undef VTE_DISABLE_DEPRECATED
 #include <vte/vte.h>
@@ -28,7 +29,7 @@ VteTerminal *terminal;
 char *env_add[] = {NULL};
 char *geometry = NULL;
 const char *message = "Launching interactive shell...\r\n";
-const char *command = NULL;
+const char **command = NULL;
 const char *working_directory = NULL;
 const char *output_file = NULL;
 char *pty_flags_string = NULL;
@@ -503,39 +504,50 @@ int terminal_setup(void)
 int connect_console()
 {
 	GError *err = NULL;
-	char **command_argv = NULL;
-	int command_argc;
 	GPid pid = -1;
+	char *shell = {0};
 
-	if (command == NULL || *command == '\0')
-		command = vte_get_user_shell ();
+	if (command == NULL || **command == '\0')
+	{
+		shell = vte_get_user_shell();
+		if(shell == NULL || *shell == '\0')
+			shell = g_getenv ("SHELL");
+		if(shell == NULL || *shell == '\0')
+			shell = "/bin/sh";
 
-	if (command == NULL || *command == '\0')
-		command = g_getenv ("SHELL");
+		//login shell
+		char *shcmd[] = {shell, "-l", NULL};
+		command = shcmd;
+	}
 
-	if (command == NULL || *command == '\0')
-		command = "/bin/sh";
-
-	if (!g_shell_parse_argv(command, &command_argc, &command_argv, &err) ||
-	    !vte_terminal_fork_command_full(terminal,
-					    pty_flags,
-					    NULL,
-					    command_argv,
-					    env_add,
-					    G_SPAWN_SEARCH_PATH,
-					    NULL, NULL,
-					    &pid,
-					    &err)) {
+	if(! vte_terminal_fork_command_full(terminal,
+					   pty_flags, NULL,
+					   command,
+					   env_add,
+					   G_SPAWN_SEARCH_PATH,
+					   NULL, NULL,
+					   &pid, &err))
+	{
 		g_warning("Failed to fork: %s\n", err->message);
 		g_error_free(err);
 	}
 
-	g_strfreev(command_argv);
 	return 0;
 }
 
 int main(int argc, const char *argv[])
 {
+	int i;
+	for(i = 1; i < argc; i++) {
+		switch(argv[i][0] != '-' || argv[i][2] ? -1 : argv[i][1]) {
+			case 'e':
+				if(++i < argc)
+					command = &argv[i];
+					goto run;
+		}
+	}
+
+run:
 	gtk_init(0, NULL);
 
 	if(window_setup())
