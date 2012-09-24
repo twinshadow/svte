@@ -10,9 +10,11 @@ static int cursor_blink = VTE_CURSOR_BLINK_ON;
 	VTE_CURSOR_SHAPE_IBEAM,
 	VTE_CURSOR_SHAPE_UNDERLINE
 */
-static int cursor_shape = VTE_CURSOR_BLINK_ON;
+static int cursor_shape = VTE_CURSOR_SHAPE_BLOCK;
 
-
+/*
+   Leave this as default
+*/
 static int pty_flags = VTE_PTY_DEFAULT;
 
 /*
@@ -43,8 +45,9 @@ static const char encoding[] = {0}; //System default
 static const char shell[] = "/bin/zsh";
 
 bool	transparent = true,
-	audible = false,
 	dbuffer = true,
+	abell = false,
+	vbell = false,
 	scrollbar = false,
 	icon_title = false,
 	use_geometry_hints = false,
@@ -73,4 +76,3 @@ static const char *colormapping[] = {
 	"#dddddd",
 	NULL
 };
-

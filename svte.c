@@ -470,7 +470,9 @@ int terminal_setup(void)
 {
 	int32_t i = 0;
 	/* Set the terminal options */
-	vte_terminal_set_audible_bell(terminal, audible);
+	vte_terminal_set_audible_bell(terminal, vbell);
+	vte_terminal_set_visible_bell(terminal, abell);
+
 	vte_terminal_set_background_transparent(terminal, transparent);
 	vte_terminal_set_cursor_blink_mode(terminal, cursor_blink);
 	vte_terminal_set_cursor_shape(terminal, cursor_shape);
@@ -480,7 +482,6 @@ int terminal_setup(void)
 	vte_terminal_set_font_from_string(terminal, font);
 	vte_terminal_set_mouse_autohide(terminal, mouse_autohide);
 	vte_terminal_set_scrollback_lines(terminal, savelines);
-	vte_terminal_set_visible_bell(terminal, !audible);
 	vte_terminal_set_word_chars(terminal, word_chars);
 	vte_terminal_set_allow_bold(terminal, bolding);
 	if (*bgimage != '\0')
