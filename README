@@ -1,0 +1,2 @@
+This requires VTE 0.29.0 or greater, and GTK 3, until I figure out how to make
+it work with older VTE/GTK setups.
