@@ -111,11 +111,13 @@ destroy_and_quit(VteTerminal *terminal, GtkWidget *window)
 	gtk_widget_destroy (window);
 	gtk_main_quit ();
 }
+
 static void
 delete_event(GtkWidget *window, GdkEvent *event, gpointer terminal)
 {
 	destroy_and_quit(VTE_TERMINAL (terminal), window);
 }
+
 static void
 child_exited(GtkWidget *terminal, gpointer window)
 {
