@@ -28,8 +28,8 @@ VteTerminal *terminal;
 
 char *env_add[] = {NULL};
 char *geometry = NULL;
+char **command = NULL;
 const char *message = "Launching interactive shell...\r\n";
-const char **command = NULL;
 const char *working_directory = NULL;
 const char *output_file = NULL;
 char *pty_flags_string = NULL;
@@ -513,7 +513,7 @@ int connect_console()
 	{
 		shell = vte_get_user_shell();
 		if(shell == NULL || *shell == '\0')
-			shell = g_getenv ("SHELL");
+			shell = (char *)g_getenv ("SHELL");
 		if(shell == NULL || *shell == '\0')
 			shell = "/bin/sh";
 
@@ -537,7 +537,7 @@ int connect_console()
 	return 0;
 }
 
-int main(int argc, const char *argv[])
+int main(int argc, char *argv[])
 {
 	int i;
 	for(i = 1; i < argc; i++) {
