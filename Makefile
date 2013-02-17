@@ -23,3 +23,6 @@ install: all
 	@echo installing executable file to ${prefix}/bin
 	@install -d ${prefix}/bin
 	@install -m 755 svte ${prefix}/bin/svte
+
+clean:
+	rm *.o svte
